@@ -1,0 +1,167 @@
+/* 회원 페이지 전체를 감싸고 있는 요소 */
+.myPage-content{
+    display: flex; /* 플렉스 컨테이너 지정(설정) */
+    width: 1000px; /* 너비 1000px */
+    min-height: 700px; /* 최소 높이 700px */
+    margin: 50px auto;
+
+    /*
+        width / height 고정 크기 관련 속성
+
+        1) width / height
+            - 지정된 크기로 고정
+
+        2) min-width / min-height
+            - 내부 요소가 부모 크기보다 작아도 지정된 최소 크기를 유지
+            - 단, 내부 요소가 부모크기를 초과하면 부모의 크기가 늘어남
+
+        3) max-width / max-height
+            - 내부 요소가 부모 크기보다 커도 지정된 크기를 유지
+            - 단, 내부 요소가 부모 크기보다 작다면 부모의 크기가 줄어듬
+    */
+}
+
+/* 사이드메뉴 */
+.left-side{
+    width: 25%; /* 너비 25% 자리 할당*/
+    border-right: 2px solid #ddd; /* 테두리 오른쪽 2px + 회색 */
+}
+
+.list-group{
+    width: 100%; /* 너비 100% */
+    list-style: none; /* li 태그의 • 삭제 */
+    padding-right: 20px; /* 오른쪽 여백 20px 할당 */
+}
+
+.list-group > li{
+    height: 50px; /* 높이 50px */
+    font-size: 18px; /* 글자 크기 18px */
+}
+
+.list-group > li > a{
+    color: black; /* 글자 검정색 */
+    text-decoration: none; /* 밑줄 제거*/
+
+    display: flex; /* 플렉스 컨테이너 적용 */
+    height: 100%; /* 높이 100% 사용 */
+
+    justify-content: center; /* 가로선 가운데로 배치 */
+    align-items: center; /* 교차축 가운데로 배치*/
+
+    border-bottom : 2px solid #ddd;
+}
+
+.list-group > li > a:hover{
+    background-color: #f2f2f2; /* 마우스 가져다대면 바탕색 변경 */
+}
+
+/* ********************** */
+/* 마이페이지 공통 */
+.myPage-main{
+    width: 75%; /* 너비 75% 사용 */
+    padding: 0 50px;
+}
+
+/* 마이페이지 제목 */
+.maPage-title{
+    margin-bottom: 10px;
+    font-size: 30px; /* 글자 크기 30px */
+}
+
+/* 마이페이지 부제 */
+.myPage-subject{
+    display: block; /* 블록 설정 */
+    margin-bottom: 30px;
+
+    font-size: 14px; /* 글자 크기 14px */
+    letter-spacing: -1px; /* 글자 사이 간격 좁게(-) */
+}
+
+/* 마이페이지 행 단위 스타일 지정 */
+.myPage-row{
+    width: 500px; /* 너비 500px */
+    height: 50px; /* 높이 50px */
+    margin-top: 20px; /* 위에서 20px 떨어지게 */
+
+    display: flex; /* 플렉스 컨테이너 설정 */
+    align-items: center; /* 세로선 중앙으로 */
+    border-bottom: 2px solid #ddd; /* 테두리 아래 2px 회색 */
+}
+
+.myPage-row > * {
+    font-size: 18px; /* 글자 크기 */
+    font-weight: bold; /* 글자 두껍게 */
+}
+
+/* 행 제목 */
+.myPage-row > label{
+    width: 30%; /* 너비 30% 공간 할당 */
+    color: #455ba8; /* 행 제목(닉네임/전화번호) 색 변경 */
+}
+
+.myPage-row > span{
+    width: 70%; /* 너비 70% 공간 할당 */
+    color: #455ba8; /* 행 제목(주소) 색 변경 */
+}
+
+/* 행 내부 input 태그 */
+.myPage-row > input{
+    width: 70%; /* 너비 70% */
+    height: 100%; /* 높이 100% */
+    border: none; /* 테두리 제거 */
+    outline: none; /* 아웃라인 제거 */
+    font-weight: normal; /* 글씨 두껍지않게 일반 사이즈로 */
+}
+
+/* 제출 버튼 */
+.myPage-submit{
+    width: 100%;
+    padding: 10px;
+    margin: 50px 0;
+
+    border: none; /* 테두리 제거 */
+    font-size: 20px; /* 글자 크기 20px */
+    font-weight: bold; /* 글자 두껍게 */
+
+    background-color: #455ba8; /* 배경 색 */
+    color: white; /* 글자 색 하얀색 */
+    cursor: pointer; /* 마우스 커버 가져다대면 손가락 표시 */
+}
+
+/* form 태그 */
+form[name='myPage-frm']{
+    display: flex; /* 플렉스 설정 */
+    justify-content: center; /* 가로선 가운데 정렬 */
+    align-items: center; /* 세로선 가운데 정렬  */
+    flex-direction: column; /* 메인을 열로 시작 */
+}
+
+/* 내부 input 요소 focus 시 */
+.myPage-row:focus-within{
+    border-bottom-color: #455ba8;
+}
+
+
+/* ********************************** */
+
+/* 내 정보 페이지 전용 스타일 */
+
+.info-title{
+    border: none; /* 테두리(밑줄) 제거 */
+}
+
+.info-address{
+    margin: 0;
+}
+
+.info-address > button{
+    width: 30%; /* 너비 30% 공간 할당 */
+    height: 70%; /* 높이 70% 공간 할당 */
+
+    font-size: 14px; /* 글자 크기 14px */
+    font-weight: normal; /* 글자 두께 - 보통 */
+
+    background-color: white; /* 배경 색 */
+    border : 1px solid gray; /* 테두리 색 */
+}
+
