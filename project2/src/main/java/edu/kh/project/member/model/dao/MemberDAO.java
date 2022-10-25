@@ -13,7 +13,7 @@ public class MemberDAO {
 	 */
 	public Member login(String memberEmail) {
 		
-		return loginMember;
+		return null;
 	}
 
 }
