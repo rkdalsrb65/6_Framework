@@ -1,14 +1,23 @@
 package edu.kh.project.member.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.project.member.model.service.MemberService;
 import edu.kh.project.member.model.service.MemberServiceImpl;
@@ -22,9 +31,12 @@ import edu.kh.project.member.model.vo.Member;
 // 				 알맞은 화면으로 응답하는 방법을 제어하는 역할
 
 
-//Controller 어노테이션 : 컴파일러에게 현재 클래스가 Controller임을 알려줌
+// Controller 어노테이션 : 컴파일러에게 현재 클래스가 Controller임을 알려줌
 //							+ bean 등록 (Spring이 객체로 만들어서 관리)
 @Controller
+@SessionAttributes({"loginMember", "message", "test2"})
+
+// Model에 추가된 속성 중 key가 일치하는 속성을 session scope 속성으로 추가
 public class MemberController {
 	
 	// * 공용으로 사용할 Service 객체 생성 *
@@ -119,8 +131,32 @@ public class MemberController {
 	// * @ModelAttribute 어노테이션 생략도 가능!
 	// == 커맨드 객체 
 	
+	// * 참고 *
+	// Controller 메서드 매개변수에 객체를 작성하면
+	// 자동으로 생성되거나 얻어올 수 있는 이유
+	// -> Spring Container에서 Argument Resolver(매개변수 해결사) 제공해서
+	// 		유연하게 처리함
+	
 	@PostMapping("/member/login")
-	public String login(/* @ModelAttribute */ Member inputMember) {
+	public String login(/* @ModelAttribute */ Member inputMember,
+				Model model,
+				RedirectAttributes ra,
+				@RequestParam(value="saveId", required=false) String saveId, // 체크박스 값 얻어오기
+				HttpServletResponse resp, // 쿠키 전달용
+				@RequestHeader(value="referer") String referer // 요청 이전 주소
+				) { 
+		
+		// Model : 데이터 전달용 객체
+		// - 데이터를 Map 형식으로 저장하여 전달하는 객체
+		// - request scope가 기본값
+		// + @SessionAttributes 어노테이션과 함께 작성 시
+		//		session scope로 변환 가능
+		
+		// RedirectAttributes
+		// - 리다이렉트 시 값을 전달하는 용도의 객체
+		// - 응답 전 : request scope
+		// - redirect 중 : session scope
+		// - 응답 후 : request scope
 		
 		// Servlet 프로젝트
 		// Service 객체 생성
@@ -130,10 +166,107 @@ public class MemberController {
 		
 		// 서비스 호출 후 결과 반환 받기
 		Member loginMember = service.login(inputMember);
+		
+		String path = null; // 리다이렉트 경로를 저장할 변수
 
 		// 로그인 성공 시 loginMember를 세션에 추가
 		// 로그인 실패 시 "아이디 또는 비밀번호가 일치하지 않습니다" 세션에 추가
+		if(loginMember != null) {
+			path = "/"; // 메인 페이지
+			// 로그인 성공 시 loginMember를 세션에 추가
+			
+			// addAttribute("K", V) == req.setAttribute("K", V)
+			model.addAttribute("loginMember", loginMember);
+			// -> request scope 상태
+			
+			// @SessionAttributes("loginMember") 클래스 위에 추가
+			// -> session scope로 변환
+			
+			// ************************
+			// 쿠키 생성
+			Cookie cookie = new Cookie("saveId", loginMember.getMemberEmail()); // 로그인된 회원의이메일을 saveid에 저장
+			
+			// 쿠키 유지 시간 지정
+			if(saveId != null) { // 체크 되었을 때
+				
+				cookie.setMaxAge(60 * 60 * 24 * 365); // 1년동안 쿠키 유지 
+				
+			} else { // 체크 안되었을 때
+				
+				// 0초 동안 쿠키 유지 -> 생성과 동시에 삭제 -> 클라이언트의 쿠키 파일을 삭제
+				cookie.setMaxAge(0);
+			}
+			
+			// 쿠키가 사용되는 경로 지정
+			cookie.setPath("/"); // localhost 밑에 모든 경로에서 사용
+			
+			// 생성된 쿠키를 응답 객체에 담아서 클라이언트에게 전달
+			resp.addCookie(cookie);
+			
+			// ************************
+			
+		} else {
+			// 기존 : HttpServletRequest req;
+			//			path = req.getHeader("referer");
+			
+			// new : @RequestHeader(value="referer") String referer
+			//			path = referer;
+			
+			path = referer; // 로그인 요청 전 페이지 주소(referer)
+			// 로그인 실패 시 "아이디 또는 비밀번호가 일치하지 않습니다" 세션에 추가
+			// model.addAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다");
+			// -> 메인페이지 주소에 message 값 노출
+			// -> RedirectAttributes로 변환
+			
+			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다");
+			
+			// addFlashAttribute() : 잠깐 session scope에 추가
+		}
 		
-		return  "redirect:/";
+		return  "redirect:" + path;
+		
 	}
+	
+	// 로그인 페이지 이동
+	@GetMapping("/member/login")
+	public String loginPage() {
+		return "member/login";
+	}
+	
+	// 로그아웃
+	@GetMapping("/member/logout")
+	public String logout(SessionStatus status) {
+		
+		// 기존 :
+		//	HttpServletRequest req;
+		//	HttpSession session = req.getSession();
+		//	session.invalidate();
+		// -> 안됨 ...
+		
+		// 왜? @SessionAttributes로 session scope에 등록된 값을 무효화 시키려면
+		// SessionStatus 라는 별도의 객체를 이용해야 한다.
+		
+		status.setComplete(); // 세션 무효화
+		
+		return "redirect:/";
+	}
+	
+	// 회원가입
+	@GetMapping("/member/signUp")
+	public String signUpPage() {
+		return "member/signUp";
+	}
+	
+	@PostMapping("/member/signUp")
+	public String signUp(/* @ModelAttribute 생략 */Member inputMember /* 커맨드 객체 */) {
+		
+		// 한글이 깨지는 이유
+		// -> POST 요청 시 인코딩 처리 필요
+		
+		return null;
+	}
+	
+	
+	
+	
 }
