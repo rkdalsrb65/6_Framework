@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%-- 문자열 관련 메서드를 제공하는 JSTL (EL형식) --%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,7 +31,8 @@
                 <!-- 이메일 입력 영역 -->
                 <div class="signUp-input-area">
                     <input type="text" name="memberEmail" id="memberEmail" placeholder="아이디(이메일)"
-                    maxlength="20" autocomplete="off" required>
+                    maxlength="20" autocomplete="off" required
+                    value="${tempMember.memberEmail}">
 
                     <button type="button">인증번호 받기</button>
                 </div>
@@ -71,7 +76,7 @@
 
                 <div class="signUp-input-area">
                     <input type="text" name="memberNickname" id="memberNickname" placeholder="닉네임"
-                    maxlength="10" required>
+                    maxlength="10" required value="${tempMember.memberNickname}">
                 </div>
 
                 <span class="signUp-message confirm">사용 가능한 닉네임 입니다.</span>
@@ -83,27 +88,33 @@
 
                 <div class="signUp-input-area">
                     <input type="text" name="memberTel" id="memberTel" placeholder="(- 없이 숫자만 입력)"
-                    maxlength="11" required>
+                    maxlength="11" required value="${tempMember.memberTel}">
                 </div>
 
                 <span class="signUp-message error">전화번호 형식이 올바르지 않습니다.</span>   
+
+                 <%-- 주소 문자열 -> 배열로 쪼개기 --%>
+                 <%-- split(문자열, 구분자) : 문자열을 구분자로 쪼개서 배열로 반환 --%>
+                 <c:set var="addr" value="${fn:split(tempMember.memberAddress, ',,')}" />
 
                  <!-- 주소 입력 -->
                  <label for="memberAddress">주소</label>
 
                 <div class="signUp-input-area">
                     <input type="text" name="memberAddress" id="sample6_postcode" placeholder="우편 번호"
-                    maxlength="6">
+                    maxlength="6" value="${addr[0]}">
 
                     <button type="button" onclick="sample6_execDaumPostcode()">검색</button>
                 </div>
 
                 <div class="signUp-input-area">
-                    <input type="text" name="memberAddress" id="sample6_address" placeholder="도로명/지번 주소">
+                    <input type="text" name="memberAddress" id="sample6_address" placeholder="도로명/지번 주소"
+                    value="${addr[1]}">
                 </div>
 
                 <div class="signUp-input-area">
-                    <input type="text" name="memberAddress" id="sample6_detailAddress" placeholder="상세 주소">
+                    <input type="text" name="memberAddress" id="sample6_detailAddress" placeholder="상세 주소"
+                    value="${addr[2]}">
                 </div>
 
                 <button id="signUp-btn">가입하기</button>
