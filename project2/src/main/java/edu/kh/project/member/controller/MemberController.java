@@ -260,7 +260,9 @@ public class MemberController {
 	@PostMapping("/member/signUp")
 	public String signUp(/* @ModelAttribute 생략 */
 			Member inputMember /* 커맨드 객체 */,
-			String[] memberAddress /* name 속성 값이 memberAddress인 값을 배열로 반환 */) {
+			String[] memberAddress, /* name 속성 값이 memberAddress인 값을 배열로 반환 */
+			RedirectAttributes ra,
+			@RequestHeader("referer") String referer) {
 		
 		// 한글이 깨지는 이유
 		// -> POST 요청 시 인코딩 처리 필요 -> 인코딩 필터 처리(web.xml)
@@ -281,7 +283,24 @@ public class MemberController {
 			
 		}
 		
-		return null;
+		// 서비스 호출 후 결과 반환 받기
+		int result = service.signUp(inputMember);
+		
+		String path = null; // 리다이렉트 경로 지정
+		String message = null; // 전달할 메세지 저장 변수
+		
+		if(result > 0) { // 성공 시
+			path = "/";
+			message = "회원 가입 성공!";
+			
+		} else { // 실패 시
+			path = referer;
+			message = "회원 가입 실패...";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
 	}
 	
 	
