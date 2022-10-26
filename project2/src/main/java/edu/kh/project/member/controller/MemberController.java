@@ -258,10 +258,28 @@ public class MemberController {
 	}
 	
 	@PostMapping("/member/signUp")
-	public String signUp(/* @ModelAttribute 생략 */Member inputMember /* 커맨드 객체 */) {
+	public String signUp(/* @ModelAttribute 생략 */
+			Member inputMember /* 커맨드 객체 */,
+			String[] memberAddress /* name 속성 값이 memberAddress인 값을 배열로 반환 */) {
 		
 		// 한글이 깨지는 이유
-		// -> POST 요청 시 인코딩 처리 필요
+		// -> POST 요청 시 인코딩 처리 필요 -> 인코딩 필터 처리(web.xml)
+		
+		// Spring은
+		// 1) 같은 name 속성을 가진 input 태그의 값을
+		// 값,값,값,값, ... 자동으로 하나의 문자열로 만들어줌.
+		
+		// 2) input type="text"의 값이 작성되지 않은 경우
+		//		null이 아닌 빈 칸("")으로 값을 얻어온다.
+		
+		// 주소가 작성되지 않은 경우 -> null
+		if (inputMember.getMemberAddress().equals(",,")) {
+			inputMember.setMemberAddress(null);
+		} else { // 주소가 작성된 경우 -> 주소,,주소,,주소
+			
+			inputMember.setMemberAddress(String.join(",,", memberAddress));
+			
+		}
 		
 		return null;
 	}
