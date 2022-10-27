@@ -19,6 +19,13 @@ public interface MyPageService {
 	 * @return result
 	 */
 	int changePw(Map<String, Object> paramMap);
+
+	/** 회원 탈퇴 서비스
+	 * @param memberNo
+	 * @param memberPw
+	 * @return result
+	 */
+	int memberDelete(int memberNo, String memberPw);
 	
 
 	
