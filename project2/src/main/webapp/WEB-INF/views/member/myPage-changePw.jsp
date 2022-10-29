@@ -21,8 +21,6 @@
 
             <jsp:include page="/WEB-INF/views/member/sideMenu.jsp" />
 
-
-
             <section class="myPage-main">
 
                 <h1 class="myPage-title">비밀번호 변경</h1>
@@ -44,8 +42,6 @@
                         <label>새 비밀번호 확인</label>
                         <input type="password" name="newPwConfirm" maxlength="20">
                     </div>
-
-                    
 
                     <button class="myPage-submit">변경하기</button>
 
