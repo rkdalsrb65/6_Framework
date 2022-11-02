@@ -36,7 +36,7 @@
         <article> : 본문과 독립된 콘텐츠를 작성하는 영역
     -->
 <%-- 화면 : header/footer
-     기능 : 로그인 --%>
+    기능 : 로그인 --%>
     <main>
         <%-- header-jsp 추가(포함) --%>
         <%--
@@ -58,7 +58,15 @@
                     <%-- 로그인 X인 경우 --%>
                     <c:when test="${empty sessionScope.loginMember}">
                             <%-- 절대 경로 --%>
-                    <form action="/member/login" name="login-frm" method="POST">
+                    <form action="/member/login" name="login-frm" method="POST"
+                    onsubmit="return loginValidate();">
+
+                    <%-- 
+                        form태그의 submit 이벤트를 취소시키는 방법1
+
+                        -> 인라인 이벤트 모델의 결과로 false를 리턴하면
+                            제출 이벤트 취소된다.
+                    --%>
         
                     <!-- 아이디, 비밀번호, 로그인 버튼 -->
                     <fieldset id="id-pw-area">
@@ -87,7 +95,7 @@
 
                     <!-- label 태그 내부에 input태그를 작성하면 자동 연결됨 -->
                     <label>
-                        <input type="checkbox" name="saveId" ${temp}> 아이디 저장
+                        <input type="checkbox" id="saveId" name="saveId" ${temp}> 아이디 저장
                     </label>
         
                     <!-- 회원가입/ ID/PW 찾기 -->
@@ -135,5 +143,6 @@
     <%-- footer.jsp 포함 --%>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
+    <script src="/resources/js/main.js"></script>
 </body>
 </html>
