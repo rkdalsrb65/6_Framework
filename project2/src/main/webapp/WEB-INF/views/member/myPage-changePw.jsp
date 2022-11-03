@@ -17,7 +17,7 @@
     <main>
         <jsp:include page="/WEB-INF/views/common/header.jsp" />
 
-        <session class="myPage-content">
+        <section class="myPage-content">
 
             <jsp:include page="/WEB-INF/views/member/sideMenu.jsp" />
 
@@ -26,21 +26,21 @@
                 <h1 class="myPage-title">비밀번호 변경</h1>
                 <span class="myPage-subject">현재 비밀번호가 일치하는 경우 새 비밀번호로 변경할 수 있습니다.</span>
                 
-                <form action="changePw" method="POST" name="myPage-frm">
+                <form action="changePw" method="POST" name="myPage-frm" id="changePwForm" onsubmit>
 
                     <div class="myPage-row">
                         <label>현재 비밀번호</label>
-                        <input type="password" name="currentPw" maxlength="20">
+                        <input type="password" name="currentPw" id="currentPw" maxlength="20">
                     </div>
 
                     <div class="myPage-row">
                         <label>새 비밀번호</label>
-                        <input type="password" name="newPw" maxlength="20">
+                        <input type="password" name="newPw" id="newPw" maxlength="20">
                     </div>
 
                     <div class="myPage-row">
                         <label>새 비밀번호 확인</label>
-                        <input type="password" name="newPwConfirm" maxlength="20">
+                        <input type="password" name="newPwConfirm" id="newPwConfirm" maxlength="20">
                     </div>
 
                     <button class="myPage-submit">변경하기</button>
@@ -48,12 +48,12 @@
                 </form>
 
             </section>
-        </session>
+        </section>
 
     </main>
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
-    <!-- 다음 주소 api 추가 -->
-
+    <%-- myPage.js external 방식으로 추가 --%>
+    <script src="/resources/js/member/myPage.js"></script>
 </body>
 </html>
