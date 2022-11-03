@@ -137,24 +137,31 @@ if(memberDeleteForm != null){ // memberDeleteForm 요소가 존재할 때
 }
 
 // 인라인 모델로 탈퇴처리
-function memberDeleteValidate(){
+// function memberDeleteValidate(){
 
-    // 비밀번호 입력 검사
-    const memberPw = document.getElementById("memberPw");
+//     // 비밀번호 입력 검사
+//     const memberPw = document.getElementById("memberPw");
 
-    if(memberPw.value.trim().length == 0){
-        alert("비밀번호를 입력해주세요.")
-        memberPw.focus();
-        memberPw.value = "";
-        return false;
-    }
+//     if(memberPw.value.trim().length == 0){
+//         alert("비밀번호를 입력해주세요.")
+//         memberPw.focus();
+//         memberPw.value = "";
+//         return false;
+//     }
 
-    // 체크 여부 검사
-    const agree = document.getElementById("agree");
+//     // 체크 여부 검사
+//     const agree = document.getElementById("agree");
 
-    if(!agree.checked){ // 체크가 되지 않은 경우
-        alert("탈퇴 동의하시면 체크를 눌러주세요.");
-        agree.focus();
-        return false;
-    }
-}
+//     if(!agree.checked){ // 체크가 되지 않은 경우
+//         alert("탈퇴 동의하시면 체크를 눌러주세요.");
+//         agree.focus();
+//         return false;
+//     }
+    
+//     // 탈퇴 여부 확인
+//     if(!confirm("정말로 탈퇴 하시겠습니까?")){
+//         alert("탈퇴 취소");
+//         return false;
+//     }
+//     return true;
+// }
