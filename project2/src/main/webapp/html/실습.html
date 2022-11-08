@@ -170,18 +170,18 @@
         inputName.addEventListener("change", function(){
 
 
-        // 문자가 입력되지 않은 경우
-        if(inputName.value.trim().length == 0){
-            nameMessage.innerText = "이름을 입력해주세요.";
-            inputName.value = "";
+            // 문자가 입력되지 않은 경우
+            if(inputName.value.trim().length == 0){
+                nameMessage.innerText = "이름을 입력해주세요.";
+                inputName.value = "";
 
-            // confirm, error 클래스 제거 -> 검정 글씨로 만들기
-            nameMessage.classList.remove("confirm", "error");
+                // confirm, error 클래스 제거 -> 검정 글씨로 만들기
+                nameMessage.classList.remove("confirm", "error");
 
-            // 유효성 검사 확인 객체에 현재 상태 저장
-            checkObj.inputName = false;
-            return;
-        }
+                // 유효성 검사 확인 객체에 현재 상태 저장
+                checkObj.inputName = false;
+                return;
+            }
 
             const regEx = /^[가-힣]{2,5}$/;
 
@@ -197,12 +197,6 @@
 
                 checkObj.inputName = false;
             }
-
-
-
-
-
-
 
         })
 
@@ -230,23 +224,22 @@
                 alert("성별을 선택해주세요");
                 return false;
             }
-        }
+        
 
-        inputTel.addEventListener("change", function(){
-        const inputTel = document.getElementById("inputTel");
-        const regEx = /^[0][0-9]{1,2}-[0-9]{3,4}-[0-9]{4}/;
-
-
-        if(!regEx.test(inputTel.value)){
-            alert("전화번호의 형식이 올바르지 않습니다");
-
-            return false;
-        }
-        return true;
+            const inputTel = document.getElementById("inputTel");
+            const regEx = /^[0][0-9]{1,2}-[0-9]{3,4}-[0-9]{4}/;
 
 
+            if(!regEx.test(inputTel.value)){
+                alert("전화번호의 형식이 올바르지 않습니다");
 
-    });
+                return false;
+            }
+            return true;
+
+
+
+        };
 
 
 
