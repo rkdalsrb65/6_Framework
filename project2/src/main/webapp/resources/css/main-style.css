@@ -460,3 +460,17 @@ section.content{
             margin: 0;
             color: gray;
         }
+
+
+#content-1-2{
+    width: 500px;
+    margin: 50px auto;
+}
+
+.secession{
+    background-color: #efefcc;
+}
+
+.secession>td:first-of-type{
+    text-decoration: line-through; /* 가운데 선 */
+}
