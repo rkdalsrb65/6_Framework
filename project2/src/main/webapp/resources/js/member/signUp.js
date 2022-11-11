@@ -249,10 +249,45 @@ memberNickname.addEventListener("input", function(){
     if(regEx.test(memberNickname.value)){ // 유효한 경우
 
         //** 닉네임 중복검사 코드 추가 예정 ** 
-        nickMessage.innerText = "유효한 닉네임 형식 입니다.";
-        nickMessage.classList.add("confirm");
-        nickMessage.classList.remove("error");
-        checkObj.memberNickname = true;
+        const param = {"memberNickname": memberNickname.value};
+        $.ajax({
+            url: "/nicknameDupCheck", // 비동기 통신을 진행 서버 요청 주소
+            data: param, // JS -> 서버로 전달할 값(여러개 가능)
+            // type: "GET", // 데이터 전달 방식(GET/POST) 미작성 시 기본값 GET
+            success: (res) => { // 매개변수 res == 서버 비동기 통신 응답 데이터
+                // 비동기 통신을 성공해서 응답을 받았을 때
+                // 서버로 부터 전달 받은 응답 데이터
+                // (매개변수 이름은 자유)
+                // console.log("res : " + res);
+
+                if (res == 0){ // 중복이 아니면
+                    nickMessage.innerText = "사용 가능한 닉네임 입니다.";
+                    nickMessage.classList.add("confirm");
+                    nickMessage.classList.remove("error");
+
+                    checkObj.memberNickname = true;
+
+                } else { // 중복이면
+                    nickMessage.innerText = "이미 사용중인 닉네임 입니다.";
+                    nickMessage.classList.add("error");
+                    nickMessage.classList.remove("confirm");
+
+                    checkObj.memberNickname = false;
+
+                }
+            },
+            error: () => { // 비동기 통신이 실패했을 때 수행
+                console.log("닉네임 중복 검사 실패");
+            },
+            complete: tempFn // success, error 수행여부 관계 없이 무조건 수행
+            
+        });
+
+
+        // nickMessage.innerText = "유효한 닉네임 형식 입니다.";
+        // nickMessage.classList.add("confirm");
+        // nickMessage.classList.remove("error");
+        // checkObj.memberNickname = true;
 
     } else{ // 유효하지 않을 경우
         nickMessage.innerText = "닉네임 형식이 유효하지 않습니다.";
@@ -262,6 +297,10 @@ memberNickname.addEventListener("input", function(){
     }
 
 });
+
+function tempFn(){
+    console.log("닉네임 검사 완료");
+}
 
 // 전화번호 유효성 검사
 const memberTel = document.getElementById("memberTel");   // input
