@@ -13,9 +13,11 @@ public class MemberDAO {
 	private SqlSessionTemplate sqlSession;
 
 	public Member login(String memberEmail) {
+		
+		
 		return sqlSession.selectOne("memberMapper.login", memberEmail);
 	}
-
+	
 
 
 }
