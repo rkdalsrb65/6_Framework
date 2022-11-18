@@ -78,7 +78,7 @@
                                 </c:forEach>
                             </c:otherwise>
                         </c:choose>
-                        <tr>
+                        <%-- <tr>
                             <th colspan="6">게시글이 존재하지 않습니다.</th>
                         </tr>
 
@@ -95,7 +95,7 @@
                             <td>2022-11-17</td>
                             <td>10</td>
                             <td>1</td>
-                        </tr>
+                        </tr> --%>
                     </tbody>
                 </table>
             </div>
@@ -115,15 +115,34 @@
                 <ul class="pagination">
                 
                     <!-- 첫 페이지로 이동 -->
-                    <li><a href="#">&lt;&lt;</a></li>
+                    <li><a href="/board/${boardCode}">&lt;&lt;</a></li>
 
                     <!-- 이전 목록 마지막 번호로 이동 -->
-                    <li><a href="#">&lt;</a></li>
+                    <li><a href="/board/${boardCode}?cp=${pagination.prevPage}">&lt;</a></li>
 
-					
+					<%-- 몇부터 시작(begin)해서 몇까지(end) 몇칸씩 증가(step) --%>
+                    <c:forEach var="i" begin="${pagination.startPage}" 
+                        end="${pagination.endPage}" step="1">
+                    
+                        <c:choose>
+                            <c:when test="${i == pagination.currentPage}">
+                                <!-- 현재 보고있는 페이지 -->
+                                <li><a class="current">${i}</a></li>
+                            </c:when>
+
+                            <c:otherwise>
+                                <!-- 현재 페이지를 제외한 나머지 -->
+                                <li><a href="/board/${boardCode}?cp=${i}">${i}</a></li>
+                            </c:otherwise>
+                        </c:choose>
+
+
+                    </c:forEach>
+
+
                     <!-- 특정 페이지로 이동 -->
                     
-                    <!-- 현재 보고있는 페이지 -->
+                    <%-- <!-- 현재 보고있는 페이지 -->
                     <li><a class="current">1</a></li>
                     
                     <!-- 현재 페이지를 제외한 나머지 -->
@@ -135,13 +154,13 @@
                     <li><a href="#">7</a></li>
                     <li><a href="#">8</a></li>
                     <li><a href="#">9</a></li>
-                    <li><a href="#">10</a></li>
+                    <li><a href="#">10</a></li> --%>
                     
                     <!-- 다음 목록 시작 번호로 이동 -->
-                    <li><a href="#">&gt;</a></li>
+                    <li><a href="/board/${boardCode}?cp=${pagination.nextPage}">&gt;</a></li>
 
                     <!-- 끝 페이지로 이동 -->
-                    <li><a href="#">&gt;&gt;</a></li>
+                    <li><a href="/board/${boardCode}?cp=${pagination.maxPage}">&gt;&gt;</a></li>
 
                 </ul>
             </div>
@@ -176,5 +195,7 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 
+
+    <script src="/resources/js/board/boardList.js"></script>
 </body>
 </html>
