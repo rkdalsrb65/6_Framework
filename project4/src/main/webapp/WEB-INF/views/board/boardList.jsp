@@ -197,7 +197,7 @@
 
 
     <script>
-        const boardCode = "#{boardCode}";
+        const boardCode = "${boardCode}";
     </script>
     <script src="/resources/js/board/boardList.js"></script>
 </body>

@@ -46,6 +46,6 @@
     if (insertBtn != null){
         insertBtn.addEventListener("click", () => {
             location.href = "/write/" + boardCode;
-        })
+        });
     }
 })();
