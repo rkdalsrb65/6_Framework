@@ -16,7 +16,7 @@ public class Board2 {
     private String boardCreateDate; // 게시판 작성일 B_CREATE_DATE
     private String boardUpdateDate; // 게시판 수정일 B_UPDATE_DATE
     private int readCount; // 게시판 조회수 READ_COUNT
-    private int commentCount; // 댓글 수
+    private int commentCount; // 댓글 수 COMMENT_COUNT
     private int likeCount; // 좋아요 수 
     private String memberNickname; // 게시판 작성자 MEMBER_NICKNAME
     private int memberNo; // 게시판 작성자 번호 MEMBER_NO
