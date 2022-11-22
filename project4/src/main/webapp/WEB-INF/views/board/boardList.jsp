@@ -34,12 +34,12 @@
                     
                     <thead>
                         <tr>
-                            <th>글번호</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>작성일</th>
-                            <th>조회수</th>
-                            <th>좋아요</th>
+                            <th class="empty"></th>
+                            <th colspan="2" class="title">제목</th>
+                            <th class="th-writer">작성자</th>
+                            <th class="th-date">작성일</th>
+                            <th class="th-hits">조회</th>
+                            <th><a href="#" class="th-like">좋아요</a></th>
                         </tr>
                     </thead>
 
@@ -50,14 +50,14 @@
                             <c:when test="${empty boardList}">
                             <!-- 게시글 목록 조회 결과가 비어있다면 -->
                                 <tr>
-                                    <th colspan="6">게시글이 존재하지 않습니다.</th>
+                                    <th colspan="7">게시글이 존재하지 않습니다.</th>
                                 </tr>
                             </c:when>
 
                             <c:otherwise>
                                 <c:forEach var="board" items="${boardList}">
                                     <tr>
-                                        <td>${board.boardNo}</td>
+                                        <td>${board.boardNo}</td> <!-- 게시판 번호 -->
                                         <td>
                                             <%-- 썸네일이 있을 경우에만 출력 --%>
                                             <c:if test="${not empty board.thumbnail}">
@@ -68,12 +68,12 @@
                                             /board/{boardCode}/{boardNo}
                                             --%>
                                             <a href="/board/${boardCode}/${board.boardNo}">${board.boardTitle}</a>   
-                                            [${board.commentCount}]                        
+                                            [${board.commentCount}]  <!-- 댓글 개수 -->                      
                                         </td>
-                                        <td>${board.memberNickname}</td>
-                                        <td>${board.boardCreateDate}</td>
-                                        <td>${board.readCount}</td>
-                                        <td>${board.likeCount}</td>
+                                        <td>${board.memberNickname}</td> <!-- 회원 닉네임(작성자) -->
+                                        <td>${board.boardCreateDate}</td> <!-- 작성일 -->
+                                        <td>${board.readCount}</td> <!-- 조회수 -->
+                                        <td>${board.likeCount}</td> <!-- 좋아요 -->
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
@@ -104,8 +104,9 @@
             <div class="btn-area">
 
 				<!-- 로그인 상태일 경우 글쓰기 버튼 노출 -->
+                <c:if test="${not empty sessionScope.loginMember}>
                 <button id="insertBtn">글쓰기</button>                     
-
+                </c:if>
             </div>
 
 
@@ -195,7 +196,9 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 
-
+    <script>
+        const boardCode = "${boardCode}";
+    </script>
     <script src="/resources/js/board/boardList.js"></script>
 </body>
 </html>
