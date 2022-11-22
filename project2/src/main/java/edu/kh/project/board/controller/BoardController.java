@@ -16,9 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.project.board.model.sevice.BoardService;
 import edu.kh.project.board.model.vo.Board;
@@ -225,4 +227,54 @@ public class BoardController {
 		// -> 요청 시 전달된 파라미털르 하나의 Map으로 반환
 		return service.boardLikeDown(paramMap);
 	}
+	
+	// 게시글 삭제
+	@GetMapping("/board/{boardCode}/{boardNo}/delete")
+	public String boardDelete(@PathVariable("boardNo") int boardNo,
+			@PathVariable("boardCode") int boardCode,
+			RedirectAttributes ra,
+			@RequestHeader("referer") String referer) {
+		
+		// 게시글 번호를 이용해서 게시글을 삭제(BOARD_DEL_FL = 'Y' 수정)
+		int result = service.boardDelete(boardNo);
+		
+		String path = null; // 리다이렉트 경로 지정
+		String message = null; // 전달할 메세지 저장 변수
+		
+		if(result > 0) {
+			// 성공 시 : "삭제되었습니다" 메세지 전달
+			// 해당 게시판 목록 1페이지로 리다이렉트
+			path = "/board/" + boardCode;
+			message = "삭제되었습니다";
+				
+		} else {
+			// 실패 시 : "게시글 삭제 실패" 메세지
+			// 요청 이전 주소(referer)로 리다이렉트
+			path = referer;
+			message = "게시글 삭제 실패";
+			
+		}
+			
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
+	
+	
+	// 게시글 작성 페이지 이동
+	@GetMapping("/write/{boardCode}")
+	public String boardWrite(@PathVariable("boardCode") int boardCode) {
+		return "board/boardWrite";
+	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
 }

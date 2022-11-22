@@ -72,4 +72,10 @@ public class BoardServiceImpl implements BoardService{
 	public int boardLikeDown(Map<String, Object> paramMap) {
 		return dao.boardLikeDown(paramMap);
 	}
+
+	// 게시글 삭제
+	@Override
+	public int boardDelete(int boardNo) {
+		return dao.boardDelete(boardNo);
+	}
 }

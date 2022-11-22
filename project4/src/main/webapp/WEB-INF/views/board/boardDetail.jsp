@@ -51,7 +51,7 @@
 
                     <!-- 수정한 게시글인 경우 -->
                     <c:if test="${not empty board.boardUpdateDate}">
-                        <p> <span>마지막 수정일</span>${board.boardUpdateDate}</p>   
+                        <p> <span>마지막 수정일</span>${board.boardUpdateDate}</p>
                     </c:if>
 
                     <p> <span>조회수</span>${board.readCount}</p>                    
