@@ -111,8 +111,6 @@
                     (썸네일 유무 관계 없이 다른 이미지가 있을 경우)
                     --%>
                     <c:if test="${fn:length(board.imageList) > start }">
-            
-            
 
                         <!-- 업로드 이미지 영역 -->
                         <h5>업로드 이미지</h5>
@@ -133,8 +131,7 @@
             <div class="board-content">
                 ${board.boardContent}
             </div>
-
-
+            
             <!-- 버튼 영역-->
             <div class="board-btn-area">
 
