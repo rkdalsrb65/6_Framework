@@ -18,7 +18,7 @@ public class BoardDAO {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	/**
+	/** 게시판 이름 목록 조회
 	 * @return
 	 */
 	public List<Map<String, Object>> selectBoardType() {
