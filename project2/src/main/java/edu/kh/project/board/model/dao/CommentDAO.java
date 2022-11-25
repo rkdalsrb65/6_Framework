@@ -30,4 +30,16 @@ public class CommentDAO {
 		return sqlSession.insert("commentMapper.insertComment", comment);
 	}
 
+	/** 댓글 삭제
+	 * @param commentNo
+	 * @return result
+	 */
+	public int deleteComment(int commentNo) {
+		return sqlSession.update("commentMapper.deleteComment", commentNo);
+	}
+
+	public int updateComment(Comment comment) {
+		return sqlSession.update("commentMapper.updateComment", comment);
+	}
+
 }
