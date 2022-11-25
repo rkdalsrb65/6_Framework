@@ -177,5 +177,6 @@
     integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
     crossorigin="anonymous"></script>
     <script src="/resources/js/board/board.js"></script>
+    <script src="/resources/js/board/comment.js"></script>
 </body>
 </html>
