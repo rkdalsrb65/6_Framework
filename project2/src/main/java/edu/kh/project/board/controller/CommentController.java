@@ -48,12 +48,12 @@ public class CommentController {
 	// 댓글 삭제
 	@GetMapping("/delete")
 	public int deleteComment(int commentNo) {
-		return 0;
+		return service.deleteComment(commentNo);
 	}	
 	
 	// 댓글 수정
 	@PostMapping("/update")
 	public int updateComment(Comment comment) {
-		return 0;
+		return service.updateComment(comment);
 	}
 }
