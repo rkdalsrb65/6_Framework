@@ -105,7 +105,6 @@ public class BoardController {
 			
 		}
 		
-		
 		// + 조회 수 증가(쿠키를 이용해서 해당 IP당 하루 한 번)
 		
 		// 게시글 상세 조회 성공 시 조회 수 증가
