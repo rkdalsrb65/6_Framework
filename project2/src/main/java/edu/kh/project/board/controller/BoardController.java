@@ -155,7 +155,6 @@ public class BoardController {
 
 				// ; , = (공백) 사용 불가
 				
-				
 			} else { // "readBoardNo" 쿠키가 있을 경우
 				
 				// c.getValue() : "readBoardNo 쿠키에 저장된 값 (|1990|)
