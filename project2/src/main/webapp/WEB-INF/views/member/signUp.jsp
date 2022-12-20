@@ -118,7 +118,7 @@
 
                 <button id="signUp-btn">가입하기</button>
 
-            </from>
+            </form>
 
         </section>
 
