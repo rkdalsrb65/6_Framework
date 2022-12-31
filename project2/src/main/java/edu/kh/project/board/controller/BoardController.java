@@ -210,7 +210,6 @@ public class BoardController {
 //				 System.out.println(diff / 1000); // 23:59:59초까지 남은 시간(s)				
 				
 				
-				
 				c.setMaxAge((int)(diff / 1000));
 				
 				resp.addCookie(c); // 쿠키를 클라이언트에게 전달
