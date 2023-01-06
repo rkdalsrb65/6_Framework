@@ -172,7 +172,6 @@ public class BoardController {
 				}
 			}
 			
-			
 			if(result > 0) { // 조회 수 증가 성공 시
 							// DB와 조회된 Board 조회수 동기
 				board.setReadCount(board.getReadCount() + 1);
