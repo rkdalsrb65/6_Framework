@@ -14,7 +14,6 @@ import edu.kh.project.board.model.vo.Pagination;
 
 /**
  * @author user1
- *
  */
 @Repository
 public class BoardDAO {
