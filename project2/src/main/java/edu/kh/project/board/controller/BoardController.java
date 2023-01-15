@@ -101,8 +101,7 @@ public class BoardController {
 				if(result > 0) { // 좋아요가 되어있는 경우
 					model.addAttribute("likeCheck", "on");
 				}
-			}
-			
+			}	
 		}
 		
 		// + 조회 수 증가(쿠키를 이용해서 해당 IP당 하루 한 번)
